@@ -14,9 +14,11 @@ class QuestionsController extends Controller
      */
     public function index()
     {
-        $questions = Question::latest()->paginate(5);
-        return view('questions.index')->with ('questions',$questions);
-        }
+
+        $questions = Question::with('user')->latest()->paginate(10);
+        return view('questions.index')->with('questions', $questions);
+
+    }
 
     /**
      * Show the form for creating a new resource.

@@ -8,16 +8,19 @@
                 <div class="card-header">All Questions</div>
                 @foreach($questions as $q)
                 <div class="media">
-                <div class="media-body">
-                <h3 class="mt-0"> {{ $q->title}} </h3>
-                {{ str_limit( $q->body , 250)}}
-                </div>
+                    <div class="media-body">
+                        <h3 class="mt-0"> <a href="{{ $q->url }}"> {{ $q->title}}</a> </h3>
+                        <p class="lead"> Asked by <a href="{{ $q->user->url }}">{{ $q->user->name }}</a>
+                            <small class="text-muted">{{ $q->created_date }}</small>
+                        </p>
+                        {{ str_limit( $q->body , 250)}}
+                    </div>
                 </div>
                 <hr>
                 @endforeach
                 <div class="">
-              {{$questions->links()}}
-              </div>
+                    {{$questions->links()}}
+                </div>
             </div>
         </div>
     </div>
