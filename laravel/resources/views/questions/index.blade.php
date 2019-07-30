@@ -36,12 +36,20 @@
                     </div>
                     <div class="media-body">
                         <div class="d-flex align-items-center">
-                                <h3 class="mt-0"> <a href="{{ $q->url }}"> {{ $q->title}}</a> </h3>
+
+                                    <a href="{{ $q->url }}"> <h3 class="mt-0">{{ $q->title}}</a> </h3>
+
                                 <div class="ml-auto">
 
                                     <a href="{{ route('questions.edit', $q->id) }}"
                                     class="btn btn-sm btn-outline-info"
                                     >Edit</a>
+                                    <form action="{{ route('questions.destroy',$q->id) }}"
+                                        class="form-delete" method="post">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit"  class="btn btn-sm btn-outline-danger" onclick="return confirm('Are You Sure You Want To Delete This Question?')">Delete</button>
+                                    </form>
                                 </div>
                         </div>
 
