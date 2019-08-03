@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Answer;
-use Illuminate\Http\Request;
 use App\Question;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AnswersController extends Controller
@@ -35,13 +35,13 @@ class AnswersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Question $question ,Request $request)
+    public function store(Question $question, Request $request)
     {
         $request->validate(
-            ['body'=>'required']
+            ['body' => 'required']
         );
-        $question->answers()->create(['body'=>$request->body,'user_id' =>Auth::id()]);
-        return back()->with('success','Your Answer has been added successfully');
+        $question->answers()->create(['body' => $request->body, 'user_id' => Auth::id()]);
+        return back()->with('success', 'Your Answer has been added successfully');
     }
 
     /**
@@ -61,9 +61,12 @@ class AnswersController extends Controller
      * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Answer $answer)
+    public function edit(Question $question,Answer $answer)
     {
-        //
+        $this->authorize('update',$answer);
+        return view('answers._edit')->with(compact('question','answer'));
+
+
     }
 
     /**
@@ -73,9 +76,11 @@ class AnswersController extends Controller
      * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Answer $answer)
+    public function update(Request $request,Question $question, Answer $answer)
     {
-        //
+        $this->authorize('update',$answer);
+        $answer->update($request->validate(['body'=>'required']));
+        return redirect()->route('questions.show',$question->slug)->with('success','Your Answer has been Updated Successfully');
     }
 
     /**

@@ -24,21 +24,47 @@
                                 </div>
                         <div class="media-body">
                             {!! $answer->body_html !!}
-                            <div class="float-right">
-                                <span class="text-muted">
-                                    Answerd {{ $answer->created_date }}
-                                </span>
-                                <div class="media mt-3">
-                                    <a href="{{ $answer->user->url }}" class="pr-2">
-                                    <img src="{{ $answer->user->avater }}" alt="">
-                                    </a>
-                                    <div class="media-body mt-1">
-                                        <a href="{{ $answer->user->url }}">
-                                        {{ $answer->user->name }}
-                                        </a>
-                                    </div>
+                            <div class="row">
+                                <div class="col-4">
+                                        <div class="ml-auto">
+                                                {{-- @if (Auth::user()->can('update-question',$answer)) from lesson-12-a --}}
+                                                @can('update',$answer)
+                                                <a href="{{ route('questions.answers.edit', [$question->id,$answer->id]) }}"
+                                                        class="btn btn-sm btn-outline-info"
+                                                        >Edit</a>
+                                                {{-- @endif --}}
+                                                @endcan
+                                                {{-- @if (Auth::user()->can('update-question',$answer)) from lesson-12-a--}}
+                                                @can('delete',$answer)
+                                                <form action="{{ route('questions.answers.destroy',[$question->id,$answer->id]) }}"
+                                                        class="form-delete" method="post">
+                                                            @method('DELETE')
+                                                            @csrf
+                                                            <button type="submit"  class="btn btn-sm btn-outline-danger" onclick="return confirm('Are You Sure You Want To Delete This Question?')">Delete</button>
+                                                    </form>
+                                                    @endcan
+                                                {{-- @endif --}}
+
+                                            </div>
                                 </div>
+                                <div class="col-4"></div>
+                                <div class="col-4">
+                                        <span class="text-muted">
+                                            Answerd {{ $answer->created_date }}
+                                        </span>
+                                        <div class="media mt-3">
+                                            <a href="{{ $answer->user->url }}" class="pr-2">
+                                            <img src="{{ $answer->user->avater }}" alt="">
+                                            </a>
+                                            <div class="media-body mt-1">
+                                                <a href="{{ $answer->user->url }}">
+                                                {{ $answer->user->name }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
+
                         </div>
                     </div>
                     <hr>
