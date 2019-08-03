@@ -17,7 +17,7 @@
                                     <a href="" title="This Answer is not Useful" class="vote-down off">
                                             <i class="fas fa-caret-down fa-3x"></i>
                                         </a>
-                                        <a href="" title="Click To Accept" class="accept mt-2 vote-accepted">
+                                        <a href="" title="Click To Accept" class="{{ $answer->status }} mt-2">
                                                 <i class="fas fa-check fa-2x"></i>
 
                                             </a>
