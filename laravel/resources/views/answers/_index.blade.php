@@ -40,7 +40,7 @@
                                                         class="form-delete" method="post">
                                                             @method('DELETE')
                                                             @csrf
-                                                            <button type="submit"  class="btn btn-sm btn-outline-danger" onclick="return confirm('Are You Sure You Want To Delete This Question?')">Delete</button>
+                                                            <button type="submit"  class="btn btn-sm btn-outline-danger" onclick="return confirm('Are You Sure You Want To Delete This Answer?')">Delete</button>
                                                     </form>
                                                     @endcan
                                                 {{-- @endif --}}
