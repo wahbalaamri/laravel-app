@@ -17,10 +17,26 @@
                                     <a href="" title="This Answer is not Useful" class="vote-down off">
                                             <i class="fas fa-caret-down fa-3x"></i>
                                         </a>
-                                        <a href="" title="Click To Accept" class="{{ $answer->status }} mt-2">
-                                                <i class="fas fa-check fa-2x"></i>
+                                        @can('accept', $answer)
 
+
+                                        <a href="" title="Click To Accept" class="{{ $answer->status }} mt-2"
+                                            onclick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit();">
+                                                <i class="fas fa-check fa-2x"></i>
                                             </a>
+                                            <form id="accept-answer-{{ $answer->id }}" action="{{ route('answers.accept',$answer->id )}}"
+                                                method="POST" style="display: none">
+                                            @csrf
+                                        </form>
+                                        @else
+                                        @if ($answer->is_best)
+
+                                        <a href="" title="Best Answer" class="{{ $answer->status }} mt-2"
+                                            >
+                                                <i class="fas fa-check fa-2x"></i>
+                                            </a>
+                                        @endif
+                                        @endcan
                                 </div>
                         <div class="media-body">
                             {!! $answer->body_html !!}
