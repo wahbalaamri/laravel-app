@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\User;
 
 class Question extends Model
 {
@@ -67,5 +68,17 @@ class Question extends Model
     public function getFavoritesCountAttribute()
     {
         return $this->favorites()->count();
+    }
+    public function votes()
+    {
+        return $this->morphToMany(User::class, 'votable');
+    }
+    public function upVotes()
+    {
+        return $this->votes()->wherePivot('vote',1);
+    }
+    public function downVotes()
+    {
+        return $this->votes()->wherePivot('vote',-1);
     }
 }
