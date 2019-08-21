@@ -3,8 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Auth;
 
 class Question extends Model
 {
@@ -17,11 +17,15 @@ class Question extends Model
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = $value;
-        $this->attributes['slug'] = str_slug( $value);
+        $this->attributes['slug'] = str_slug($value);
     }
+    // public function setBodyAttribute($value)
+    // {
+    //     $this->attributes['body'] = clean($value);
+    // }
     public function getUrlAttribute()
     {
-        return route('questions.show',$this->slug);
+        return route('questions.show', $this->slug);
     }
     public function getCreatedDateAttribute()
     {
@@ -29,10 +33,8 @@ class Question extends Model
     }
     public function getStatusAttribute()
     {
-        if($this->answers_count>0)
-        {
-            if($this->best_answer_id)
-            {
+        if ($this->answers_count > 0) {
+            if ($this->best_answer_id) {
                 return "answered-accepted";
             }
             return "answered";
@@ -41,7 +43,7 @@ class Question extends Model
     }
     public function getBodyHtmlAttribute()
     {
-        return \Parsedown::instance()->text($this->body);
+       return $this->bodyHtml();
     }
     public function answers()
     {
@@ -50,7 +52,7 @@ class Question extends Model
 
     public function acceptBestAnswer(Answer $answer)
     {
-        $this->best_answer_id=$answer->id;
+        $this->best_answer_id = $answer->id;
         $this->save();
     }
     public function favorites()
@@ -60,7 +62,7 @@ class Question extends Model
 
     public function isQFavorited()
     {
-        return $this->favorites()->where('user_id',Auth()->id())->count() > 0;
+        return $this->favorites()->where('user_id', Auth()->id())->count() > 0;
     }
     public function getIsFavoritedAttribute()
     {
@@ -69,6 +71,20 @@ class Question extends Model
     public function getFavoritesCountAttribute()
     {
         return $this->favorites()->count();
+    }
+
+    public function getExcerptAttribute()
+    {
+        return $this->excerpt(150);
+        
+    }
+    public function excerpt($length)
+    {
+        return str_limit(strip_tags($this->bodyHtml()), $length);
+    }
+    private function bodyHtml()
+    {
+        return clean(\Parsedown::instance()->text($this->body));
     }
 
 }
