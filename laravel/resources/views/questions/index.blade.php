@@ -19,7 +19,7 @@
                 <div class="card-body">
                     @include('layouts._messages')
                     @forelse($questions as $q)
-                    <div class="media">
+                    <div class="media post">
                         <div class="d-flex flex-column counters">
                             <div class="vote">
                                 <strong>{{ $q->votes_count }}</strong>
@@ -70,7 +70,7 @@
                             </div>
                         </div>
                     </div>
-                    <hr>
+                    
                     @empty
                     <div class="alert alert-warning">
                         <strong>Sorry</strong> There is No Question Availabe.
