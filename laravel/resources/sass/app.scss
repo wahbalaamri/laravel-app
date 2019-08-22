@@ -4,32 +4,39 @@
 @import 'variables';
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
 .counters {
     margin-right: 30px;
     font-size: 10px;
     text-align: center;
+
     strong {
         display: block;
         font-size: 2em;
     }
+
     .vote,
     .answer {
         width: 60px;
         height: 60;
     }
+
     .status {
         &.unanswered {
             border: none;
         }
+
         &.answered {
             border: 1px solid $color-green;
             color: $color-green;
         }
+
         &.answered-accepted {
             background-color: $color-green;
             color: $color-white;
         }
     }
+
     .view {
         margin-top: 10px;
     }
@@ -44,33 +51,49 @@
     margin-right: 30;
     text-align: center;
     color: $gray-700;
+
     span,
     a {
         display: block;
     }
+
     span {
         &.votes-count {
             font-size: 20px;
         }
+
         &.favorites-count {
             font-size: 12px;
         }
     }
+
     a {
         cursor: pointer;
         color: $gray-600;
+
         &.off,
         &off:hover {
             color: $gray-500;
         }
+
         &.favorite {
+
             &.favorited,
             &.favorited:hover {
                 color: $warning;
             }
         }
+
         &.vote-accepted {
             color: $green;
         }
+    }
+}
+
+.post {
+    padding: 20px 0;
+
+    &:not(:last-child) {
+        border-bottom: 1.5px solid rgba(#111, .1);
     }
 }

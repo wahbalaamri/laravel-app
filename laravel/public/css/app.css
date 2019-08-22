@@ -10722,3 +10722,11 @@ a.text-dark:focus {
   color: #38c172;
 }
 
+.post {
+  padding: 20px 0;
+}
+
+.post:not(:last-child) {
+  border-bottom: 1.5px solid rgba(17, 17, 17, 0.1);
+}
+
