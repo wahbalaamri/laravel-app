@@ -61,11 +61,10 @@ class AnswersController extends Controller
      * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Question $question,Answer $answer)
+    public function edit(Question $question, Answer $answer)
     {
-        $this->authorize('update',$answer);
-        return view('answers._edit')->with(compact('question','answer'));
-
+        $this->authorize('update', $answer);
+        return view('answers._edit')->with(compact('question', 'answer'));
 
     }
 
@@ -76,11 +75,18 @@ class AnswersController extends Controller
      * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Question $question, Answer $answer)
+    public function update(Request $request, Question $question, Answer $answer)
     {
-        $this->authorize('update',$answer);
-        $answer->update($request->validate(['body'=>'required']));
-        return redirect()->route('questions.show',$question->slug)->with('success','Your Answer has been Updated Successfully');
+        $this->authorize('update', $answer);
+        $answer->update($request->validate(['body' => 'required']));
+        
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Your answer has been updated',
+                'body_html' => $answer->body_html
+            ]);
+        }
+        return redirect()->route('questions.show', $question->slug)->with('success', 'Your Answer has been Updated Successfully');
     }
 
     /**
@@ -89,10 +95,10 @@ class AnswersController extends Controller
      * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $question,Answer $answer)
+    public function destroy(Question $question, Answer $answer)
     {
-        $this->authorize('delete',$answer);
+        $this->authorize('delete', $answer);
         $answer->delete();
-        return redirect()->route('questions.show',$question->slug)->with('success','Your Answer has been Delete Successfully');
+        return redirect()->route('questions.show', $question->slug)->with('success', 'Your Answer has been Delete Successfully');
     }
 }

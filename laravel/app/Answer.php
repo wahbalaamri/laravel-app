@@ -10,6 +10,7 @@ class Answer extends Model
 {
     use Votabletrait;
     protected $fillable = ['body', 'user_id'];
+    protected $appends = ['created_date','body_html'];
     public function question()
     {
         return $this->belongsTo(Question::class);

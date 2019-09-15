@@ -3,7 +3,7 @@
 </span>
 <div class="media mt-3">
     <a href="{{ $model->user->url }}" class="pr-2">
-       <img src="{{ $model->user->avater }}" alt="">
+       <img src="{{ $model->user->avatar }}" alt="">
     </a>
     <div class="media-body mt-1">
         <a href="{{ $model->user->url }}">
