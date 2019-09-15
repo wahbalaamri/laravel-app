@@ -99,6 +99,13 @@ class AnswersController extends Controller
     {
         $this->authorize('delete', $answer);
         $answer->delete();
+        if (request()->expectsJson())
+        {
+            return response()->json([
+                'message' => 'Your Answer has been Delete Successfully',
+                
+            ]);
+        }
         return redirect()->route('questions.show', $question->slug)->with('success', 'Your Answer has been Delete Successfully');
     }
 }

@@ -10,7 +10,8 @@ export default {
             bodyHtml:this.answer.body_html,
             id:this.answer.id,
             questionId:this.answer.question_id,
-            beforeEditCache:null
+            beforeEditCache:null,
+            
         }
     },
     methods:{
@@ -24,7 +25,7 @@ export default {
         },
         update(){ 
              
-            axios.patch(`/questions/${this.questionId}/answers/${this.id}`, {
+            axios.patch(this.endpoint, {
                 body: this.body
             })
             .then(res => {
@@ -36,11 +37,30 @@ export default {
                 alert(err.response.data.message);
                 this.editing=false;
             });
+        },
+
+        destroy()
+        {
+            if(confirm('Are You Sure You Want To Delete This Answer?'))
+            {
+                axios.delete(this.endpoint)
+                .then(res=>{
+                    $(this.$el).fadeOut(500,()=>{
+                        alert(res.data.message);
+                    })
+                })
+                .catch(err=>{
+
+                });
+            }
         }
     },
     computed:{
         isInvalid(){
             return this.body.length < 10;
+        },
+        endpoint(){
+            return `/questions/${this.questionId}/answers/${this.id}`;
         }
     }
 }

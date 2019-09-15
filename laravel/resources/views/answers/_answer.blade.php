@@ -26,13 +26,8 @@
                             @endcan
                             {{-- @if (Auth::user()->can('update-question',$answer)) from lesson-12-a--}}
                             @can('delete',$answer)
-                            <form action="{{ route('questions.answers.destroy',[$question->id,$answer->id]) }}"
-                                class="form-delete" method="post">
-                                @method('DELETE')
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-outline-danger"
-                                    onclick="return confirm('Are You Sure You Want To Delete This Answer?')">Delete</button>
-                            </form>
+                            <button @click="destroy" class="btn btn-sm btn-outline-danger">Delete</button>
+                           
                             @endcan
                             {{-- @endif --}}
 
